@@ -19,7 +19,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // Utiliser la nouvelle API pour désactiver CSRF
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/user/register", "/api/user/login", "api/user/all").permitAll()
+                        .requestMatchers("/api/user/register", "/api/user/login", "api/user/all", "api/user/{id}").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(withDefaults());
