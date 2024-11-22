@@ -41,7 +41,7 @@ public class Activite {
         return userId;
     }
 
-    public Long getId_theme() {
+    public Long getThemeId() {
         return themeId;
     }
 

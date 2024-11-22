@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   microservice:
+    container_name: activitemicroservice
     build:
       context: .
       dockerfile: Dockerfile
@@ -14,6 +15,8 @@ services:
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
     depends_on:
       - database
+    networks:
+      - shared-network
 
   database:
     image: postgres:15
@@ -24,3 +27,10 @@ services:
       POSTGRES_DB: activite_db
     ports:
       - "5433:5432"
+    networks:
+      - shared-network
+
+networks:
+  shared-network:
+    external: true
+
