@@ -1,24 +1,35 @@
 version: '3.8'
 
 services:
-  user-service:
+  microservice:
+    container_name: usermicroservice
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "8081:8081"
     environment:
-      POSTGRES_DB: userdb
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: secret
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/user_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on:
+      - database
+    networks:
+      - shared-network
 
-  db:
+  database:
     image: postgres:15
+    container_name: user_db
     environment:
-      POSTGRES_DB: users
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: user_db
     ports:
-      - "5432:5432"
+      - "5434:5432"
+    networks:
+      - shared-network
 
-
+networks:
+  shared-network:
+    external: true
