@@ -18,10 +18,14 @@ public class ActiviteService {
 
     // Create an activite
     public Activite createActivite(Activite activity) {
-        // Vérifie si l'utilisateur existe
-        /*if (!userServiceClient.validateUser(activity.getUserId())) {
+        if (activity.getUserId() == null) {
+            System.out.println(activity.getNomActivite());
+            throw new RuntimeException("User ID must not be null.");
+        }
+
+        if (!userServiceClient.validateUser(activity.getUserId())) {
             throw new RuntimeException("User not found with ID: " + activity.getUserId());
-        }*/
+        }
         return activiteRepository.save(activity);
     }
 
