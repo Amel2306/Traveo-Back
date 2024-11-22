@@ -45,6 +45,11 @@ public class ActiviteService {
                 .orElseThrow(() -> new RuntimeException("Activite not found with ID: " + id));
     }
 
+    // Read by theme ID
+    public List<Activite> getActivitiesByThemeId(Long themeId) {
+        return activiteRepository.findByThemeId(themeId);
+    }
+
     // Update an activite
 
     public Activite updateActivite(Long id, Activite updatedActivite) {

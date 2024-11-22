@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface ActiviteRepository extends JpaRepository<Activite, Long> {
     List<Activite> findByUserId(Long userId);
+    List<Activite> findByThemeId(Long themeId);
 }
 

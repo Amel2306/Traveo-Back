@@ -16,13 +16,13 @@ public class ActiviteController {
     private ActiviteService activiteService;
 
     // Create
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<Activite> createActivite(@RequestBody Activite activite) {
         return ResponseEntity.ok(activiteService.createActivite(activite));
     }
 
     // Read all
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<Activite>> getAllActivities() {
         return ResponseEntity.ok(activiteService.getAllActivities());
     }
@@ -38,6 +38,13 @@ public class ActiviteController {
     public ResponseEntity<Activite> getActiviteById(@PathVariable Long id) {
         return ResponseEntity.ok(activiteService.getActiviteById(id));
     }
+
+    // Read by theme ID
+    @GetMapping("/theme/{themeId}")
+    public ResponseEntity<List<Activite>> getActivitiesByThemeId(@PathVariable Long themeId) {
+        return ResponseEntity.ok(activiteService.getActivitiesByThemeId(themeId));
+    }
+
 
     // Update
     @PutMapping("/{id}")
