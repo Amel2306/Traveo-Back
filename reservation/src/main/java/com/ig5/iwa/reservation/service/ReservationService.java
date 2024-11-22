@@ -26,12 +26,18 @@ public class ReservationService {
         return reservationRepository.findAll();
     }
 
-    public Reservation saveReservation(Reservation reservation) {
+    /**public Reservation saveReservation(Reservation reservation) {
         // Vérification via RestTemplate avant d'enregistrer
         validateUser(reservation.getUtilisateurId());
         validateActivity(reservation.getActiviteId());
         return reservationRepository.save(reservation);
+    }**/
+    public Reservation saveReservation(Reservation reservation) {
+        // Désactiver temporairement la validation de l'utilisateur
+        // validateUser(reservation.getUtilisateurId());
+        return reservationRepository.save(reservation);
     }
+
 
     public List<Reservation> getReservationsByUserId(Long userId) {
         return reservationRepository.findByUtilisateurId(userId);
@@ -46,21 +52,27 @@ public class ReservationService {
     }
 
     public Reservation updateReservation(Long id, Reservation updatedReservation) {
-        Optional<Reservation> optionalReservation = reservationRepository.findById(id);
-        if (optionalReservation.isPresent()) {
-            // Validation via RestTemplate
-            validateUser(updatedReservation.getUtilisateurId());
-            validateActivity(updatedReservation.getActiviteId());
+        // Récupérer l'entité existante
+        Reservation reservation = reservationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Réservation non trouvée pour id : " + id));
 
-            Reservation reservation = optionalReservation.get();
-            reservation.setActiviteId(updatedReservation.getActiviteId());
-            reservation.setUtilisateurId(updatedReservation.getUtilisateurId());
-            reservation.setDateReservation(updatedReservation.getDateReservation());
-            return reservationRepository.save(reservation);
-        } else {
-            throw new RuntimeException("Réservation non trouvée pour id : " + id);
-        }
+        // Validation via RestTemplate
+        //validateUser(updatedReservation.getUtilisateurId());
+        //validateActivity(updatedReservation.getActiviteId());
+
+        // Mettre à jour les champs nécessaires
+        reservation.setActiviteId(updatedReservation.getActiviteId());
+        reservation.setUtilisateurId(updatedReservation.getUtilisateurId());
+        reservation.setDateReservation(updatedReservation.getDateReservation());
+
+        // Sauvegarder l'entité
+        reservationRepository.save(reservation);
+
+        // Retourner l'entité mise à jour
+        return reservation;
     }
+
+
 
     public void deleteReservation(Long id) {
         if (reservationRepository.existsById(id)) {
@@ -71,14 +83,20 @@ public class ReservationService {
     }
 
     // Méthodes utilisant RestTemplate
+    //private void validateUser(Long userId) {
+        //String url = USER_SERVICE_URL + userId;
+        //try {
+            //restTemplate.getForObject(url, Object.class);
+        //} catch (Exception e) {
+            //throw new RuntimeException("Utilisateur avec id " + userId + " non trouvé.");
+        //}
+    //}
+
     private void validateUser(Long userId) {
-        String url = USER_SERVICE_URL + userId;
-        try {
-            restTemplate.getForObject(url, Object.class);
-        } catch (Exception e) {
-            throw new RuntimeException("Utilisateur avec id " + userId + " non trouvé.");
-        }
+        // Simulation de validation toujours réussie
+        System.out.println("Validation simulée de l'utilisateur avec ID : " + userId);
     }
+
 
     private void validateActivity(Long activityId) {
         String url = ACTIVITY_SERVICE_URL + activityId;
