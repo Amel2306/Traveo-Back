@@ -1,8 +1,10 @@
 package com.ig5.iwa.user.model;
 
 import jakarta.persistence.*;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @Entity
+@SpringBootApplication(scanBasePackages = "com.ig5.iwa.user")
 @Table(name = "users")
 public class User {
 

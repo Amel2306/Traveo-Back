@@ -2,7 +2,7 @@
 FROM openjdk:17-jdk-slim
 
 # Copier l'application compilée dans le conteneur
-COPY build/libs/user-0.0.1-SNAPSHOT.jar app.jar
+COPY build/libs/activite-0.0.1-SNAPSHOT.jar app.jar
 
 # Définir le point d'entrée
 ENTRYPOINT ["java", "-jar", "/app.jar"]
