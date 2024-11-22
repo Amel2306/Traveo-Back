@@ -2,14 +2,14 @@ version: '3.8'
 
 services:
   microservice:
-    container_name: usermicroservice
+    container_name: activitemicroservice
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8081:8081"
+      - "8085:8085"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/user_db
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/activite_db
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
@@ -20,16 +20,17 @@ services:
 
   database:
     image: postgres:15
-    container_name: user_db
+    container_name: activite_db
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: user_db
+      POSTGRES_DB: activite_db
     ports:
-      - "5434:5432"
+      - "5433:5432"
     networks:
       - shared-network
 
 networks:
   shared-network:
     external: true
+
