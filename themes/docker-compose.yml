@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  themes-microservice:
+    container_name: themesmicroservice
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8087:8087"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://themes-db:5432/themes_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on:
+      - themes-db
+    networks:
+      - shared-network
+
+  themes-db:
+    image: postgres:15
+    container_name: themes_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: themes_db
+    ports:
+      - "5437:5432"
+    networks:
+      - shared-network
+
+networks:
+  shared-network:
+    external: true

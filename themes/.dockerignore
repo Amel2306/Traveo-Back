@@ -1,0 +1,22 @@
+# Ignorer les fichiers système et de configuration des IDE
+.idea/
+.vscode/
+
+# Ignorer tous les dossiers de build sauf le sous-dossier `libs`
+build/*
+!build/libs/
+!build/libs/themes-0.0.1-SNAPSHOT.jar
+
+# Ignorer les fichiers de dépendances locales
+.gradle/
+node_modules/
+
+# Ignorer les fichiers de contrôle de version
+.git/
+.gitignore
+
+# Autres fichiers inutiles ou temporaires
+*.log
+*.tmp
+.DS_Store
+
