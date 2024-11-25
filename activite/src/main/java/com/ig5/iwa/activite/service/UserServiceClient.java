@@ -11,7 +11,7 @@ public class UserServiceClient {
     @Autowired
     private RestTemplate restTemplate;
 
-    private static final String USER_SERVICE_URL = "http://usermicroservice:8080/api/user/";
+    private static final String USER_SERVICE_URL = "http://162.38.32.231:8080/api/user/";
 
     public boolean validateUser(Long userId) {
         try {
