@@ -51,10 +51,19 @@ public class UserController {
 
     // Enregistrement d'un utilisateur
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody User user) {
-        System.out.println("Received user: " + user);
+    public ResponseEntity<Map<String, Object>> register(@RequestBody User user) {
+        // Enregistre l'utilisateur et récupère l'entité persistée
         User savedUser = userService.saveUser(user);
-        return ResponseEntity.ok(savedUser);
+
+        // Génère le token
+        String token = jwtUtil.generateToken(savedUser.getEmail());
+
+        // Retourne une réponse structurée
+        return ResponseEntity.ok(Map.of(
+                "message", "register successful",
+                "token", token,
+                "id", savedUser.getUserId() // Utilise l'ID de l'utilisateur persisté
+        ));
     }
 
 
@@ -69,7 +78,8 @@ public class UserController {
                     "email", existingUser.getEmail(),
                     "username", existingUser.getUsername(),
                     "role", existingUser.getRole(),
-                    "token", token
+                    "token", token,
+                    "id", existingUser.getUserId()
             ));
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Invalid credentials"));
