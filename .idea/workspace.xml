@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="76a25db3-4be4-4bfb-88cf-d4d6cbb7d995" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/activite/src/main/java/com/ig5/iwa/activite/controller/ActiviteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/activite/src/main/java/com/ig5/iwa/activite/controller/ActiviteController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +58,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/ubuntu/Documents/Traveo-Back/activite",
+    "last_opened_file_path": "/home/ubuntu/Documents/Traveo-Back/user",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -68,20 +67,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Docker.reservation: Compose Deployment">
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="Traveo-Back" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="Traveo-Back" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Spring Boot.UserApplication">
     <configuration name="ReservationApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="reservation.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.ig5.iwa.reservation.ReservationApplication" />
@@ -133,6 +119,7 @@
       <workItem from="1732524584054" duration="45000" />
       <workItem from="1732524801356" duration="914000" />
       <workItem from="1732533767068" duration="36000" />
+      <workItem from="1732618599129" duration="91000" />
     </task>
     <servers />
   </component>

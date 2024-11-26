@@ -20,9 +20,17 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public User saveUser(User user) {
+        if (user.getPassword() == null) {
+            throw new IllegalArgumentException("Password is null");
+        }
+        System.out.println("Received user: " + user);
+        System.out.println("Password: " + user.getPassword());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole("user");
+        user.setUsername(user.getFirstName()+"."+user.getLastName());
         return userRepository.save(user);
     }
+
 
     public User findByEmail(String email) {
         return userRepository.findByEmail(email).orElse(null);

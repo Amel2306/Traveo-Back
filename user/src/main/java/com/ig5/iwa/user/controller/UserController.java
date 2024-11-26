@@ -51,10 +51,12 @@ public class UserController {
 
     // Enregistrement d'un utilisateur
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody User user) {
-        userService.saveUser(user);
-        return ResponseEntity.ok("User registered successfully");
+    public ResponseEntity<?> register(@RequestBody User user) {
+        System.out.println("Received user: " + user);
+        User savedUser = userService.saveUser(user);
+        return ResponseEntity.ok(savedUser);
     }
+
 
     // Connexion d'un utilisateur
     @PostMapping("/login")
