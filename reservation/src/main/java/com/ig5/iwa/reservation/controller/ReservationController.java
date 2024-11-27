@@ -30,19 +30,19 @@ public class ReservationController {
 
     // Récupérer toutes les réservations par userID
     @GetMapping("/user/{userId}")
-    public List<Reservation> getAllReservationsByUserId(@PathVariable Long userId) {
+    public List<Reservation> getAllReservationsByUserId(@PathVariable("userId") Long userId) {
         return reservationService.getReservationsByUserId(userId);
     }
 
     // Récupérer toutes les réservations par activityID
     @GetMapping("/activity/{activityId}")
-    public List<Reservation> getAllReservationsByActivityId(@PathVariable Long activityId) {
+    public List<Reservation> getAllReservationsByActivityId(@PathVariable("activityId") Long activityId) {
         return reservationService.getReservationsByActivityId(activityId);
     }
 
     // Récupérer une réservation par son ID
     @GetMapping("/{id}")
-    public ResponseEntity<Reservation> getReservationById(@PathVariable Long id) {
+    public ResponseEntity<Reservation> getReservationById(@PathVariable("id") Long id) {
         Optional<Reservation> reservation = reservationService.getReservationById(id);
         if (reservation.isPresent()) {
             return ResponseEntity.ok(reservation.get());
@@ -53,7 +53,7 @@ public class ReservationController {
 
     // Mettre à jour une réservation
     @PutMapping("/{id}")
-    public ResponseEntity<Reservation> updateReservation(@PathVariable Long id, @RequestBody Reservation updatedReservation) {
+    public ResponseEntity<Reservation> updateReservation(@PathVariable("id") Long id, @RequestBody Reservation updatedReservation) {
         try {
             Reservation updated = reservationService.updateReservation(id, updatedReservation);
             return ResponseEntity.ok(updated);
@@ -64,7 +64,7 @@ public class ReservationController {
 
     // Supprimer une réservation
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteReservation(@PathVariable Long id) {
+    public ResponseEntity<String> deleteReservation(@PathVariable("id") Long id) {
         try {
             reservationService.deleteReservation(id);
             return ResponseEntity.ok("Réservation supprimée avec succès.");
