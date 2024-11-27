@@ -15,7 +15,7 @@ public class ThemeController {
     @Autowired
     private ThemeService themeService;
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<Theme>> getAllThemes() {
         return ResponseEntity.ok(themeService.getAllThemes());
     }
@@ -25,7 +25,7 @@ public class ThemeController {
         return ResponseEntity.ok(themeService.getThemeById(id));
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<Theme> createTheme(@RequestBody Theme theme) {
         return ResponseEntity.ok(themeService.createTheme(theme));
     }
