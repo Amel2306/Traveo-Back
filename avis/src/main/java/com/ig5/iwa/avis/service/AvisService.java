@@ -17,6 +17,9 @@ public class AvisService {
     @Autowired
     private UserServiceClient userServiceClient;
 
+    @Autowired
+    private ActiviteServiceClient activiteServiceClient;
+
 
     public List<Avis> getAllAvis() {
         return avisRepository.findAll();
@@ -37,6 +40,9 @@ public class AvisService {
     public Avis createAvis(Avis avis) {
         if (!userServiceClient.validateUser(avis.getUserId())) {
             throw new RuntimeException("User not found with ID: " + avis.getUserId());
+        }
+        else if (!activiteServiceClient.validateActivite(avis.getIdActivite())) {
+            throw new RuntimeException("Activite not found with ID: " + avis.getUserId());
         }
         return avisRepository.save(avis);
     }
