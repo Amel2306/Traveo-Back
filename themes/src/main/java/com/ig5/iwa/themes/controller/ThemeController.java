@@ -21,8 +21,10 @@ public class ThemeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Theme> getThemeById(@PathVariable Long id) {
-        return ResponseEntity.ok(themeService.getThemeById(id));
+    public ResponseEntity<Theme> getThemeById(@PathVariable("id") Long id) {
+        // Appellez un service ou renvoyez une réponse
+        Theme theme = themeService.getThemeById(id);
+        return ResponseEntity.ok(theme);
     }
 
     @PostMapping
@@ -31,12 +33,12 @@ public class ThemeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Theme> updateTheme(@PathVariable Long id, @RequestBody Theme updatedTheme) {
+    public ResponseEntity<Theme> updateTheme(@PathVariable("id") Long id, @RequestBody Theme updatedTheme) {
         return ResponseEntity.ok(themeService.updateTheme(id, updatedTheme));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteTheme(@PathVariable Long id) {
+    public ResponseEntity<String> deleteTheme(@PathVariable("id") Long id) {
         boolean deleted = themeService.deleteTheme(id);
         if (!deleted) {
             return ResponseEntity.notFound().build(); // Si l'ID n'existe pas

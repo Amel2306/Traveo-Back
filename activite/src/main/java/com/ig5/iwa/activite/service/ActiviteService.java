@@ -14,7 +14,10 @@ public class ActiviteService {
     private ActiviteRepository activiteRepository;
 
     @Autowired
-    private UserServiceClient userServiceClient; // Client pour le microservice utilisateur
+    private UserServiceClient userServiceClient;
+
+    @Autowired
+    private ThemeServiceClient themeServiceClient;
 
     // Create an activite
     public Activite createActivite(Activite activity) {
@@ -25,6 +28,9 @@ public class ActiviteService {
 
         if (!userServiceClient.validateUser(activity.getUserId())) {
             throw new RuntimeException("User not found with ID: " + activity.getUserId());
+        }
+        else if (!themeServiceClient.validateTheme(activity.getThemeId())) {
+            throw new RuntimeException("Theme not found with ID: " + activity.getThemeId());
         }
         return activiteRepository.save(activity);
     }

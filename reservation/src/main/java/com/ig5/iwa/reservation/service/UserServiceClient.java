@@ -1,4 +1,4 @@
-package com.ig5.iwa.activite.service;
+package com.ig5.iwa.reservation.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,3 +25,4 @@ public class UserServiceClient {
         }
     }
 }
+

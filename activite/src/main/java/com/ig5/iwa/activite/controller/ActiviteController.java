@@ -29,32 +29,32 @@ public class ActiviteController {
 
     // Read by user ID
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Activite>> getActivitiesByUserId(@PathVariable Long userId) {
+    public ResponseEntity<List<Activite>> getActivitiesByUserId(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(activiteService.getActivitiesByUserId(userId));
     }
 
     // Read by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Activite> getActiviteById(@PathVariable Long id) {
+    public ResponseEntity<Activite> getActiviteById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(activiteService.getActiviteById(id));
     }
 
     // Read by theme ID
     @GetMapping("/theme/{themeId}")
-    public ResponseEntity<List<Activite>> getActivitiesByThemeId(@PathVariable Long themeId) {
+    public ResponseEntity<List<Activite>> getActivitiesByThemeId(@PathVariable("themeId") Long themeId) {
         return ResponseEntity.ok(activiteService.getActivitiesByThemeId(themeId));
     }
 
 
     // Update
     @PutMapping("/{id}")
-    public ResponseEntity<Activite> updateActivite(@PathVariable Long id, @RequestBody Activite updatedActivite) {
+    public ResponseEntity<Activite> updateActivite(@PathVariable("id") Long id, @RequestBody Activite updatedActivite) {
         return ResponseEntity.ok(activiteService.updateActivite(id, updatedActivite));
     }
 
     // Delete
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteActivite(@PathVariable Long id) {
+    public ResponseEntity<String> deleteActivite(@PathVariable("id") Long id) {
         activiteService.deleteActivite(id);
         return ResponseEntity.ok("Activite deleted successfully");
     }
