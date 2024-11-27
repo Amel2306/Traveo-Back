@@ -2,9 +2,13 @@ package com.ig5.iwa.avis.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import java.util.Map;
+import java.util.List;
 
 @Service
 public class ActiviteServiceClient {
@@ -25,4 +29,19 @@ public class ActiviteServiceClient {
             return false;
         }
     }
+
+    public List<Map<String, Object>> getActivitesByUserId(Long userId) {
+            // Construire l'URL pour l'appel au microservice Activite
+            final String url = ACTIVITE_SERVICE_URL + "/user/" + userId;
+
+            // Effectuer la requête HTTP GET et récupérer la réponse
+            ResponseEntity<List<Map<String, Object>>> response = restTemplate.exchange(
+                    url,
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<List<Map<String, Object>>>() {}
+            );
+            return response.getBody();
+    }
+
 }
