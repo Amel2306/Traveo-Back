@@ -18,6 +18,12 @@ public class ReservationService {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private UserServiceClient userServiceClient;
+
+    @Autowired
+    private ActiviteServiceClient activiteServiceClient;
+
     // Base URLs pour les microservices
     private static final String USER_SERVICE_URL = "http://localhost:8082/api/users/";
     private static final String ACTIVITY_SERVICE_URL = "http://localhost:8081/api/activities/";
@@ -33,8 +39,12 @@ public class ReservationService {
         return reservationRepository.save(reservation);
     }**/
     public Reservation saveReservation(Reservation reservation) {
-        // Désactiver temporairement la validation de l'utilisateur
-        // validateUser(reservation.getUtilisateurId());
+        if (!userServiceClient.validateUser(reservation.getUtilisateurId())) {
+            throw new RuntimeException("User not found with ID: " + reservation.getUtilisateurId());
+        }
+        else if (!activiteServiceClient.validateActivite(reservation.getActiviteId())) {
+            throw new RuntimeException("Activite not found with ID: " + reservation.getActiviteId());
+        }
         return reservationRepository.save(reservation);
     }
 
