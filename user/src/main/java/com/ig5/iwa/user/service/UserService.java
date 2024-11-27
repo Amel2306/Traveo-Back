@@ -72,4 +72,13 @@ public class UserService {
         return userRepository.save(existingUser);
     }
 
+    @Transactional
+    public void deleteUser(Long userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new RuntimeException("User not found with ID: " + userId);
+        }
+        userRepository.deleteById(userId);
+        System.out.println("User with ID " + userId + " has been deleted.");
+    }
+
 }
