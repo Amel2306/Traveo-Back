@@ -21,8 +21,10 @@ public class ThemeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Theme> getThemeById(@PathVariable Long id) {
-        return ResponseEntity.ok(themeService.getThemeById(id));
+    public ResponseEntity<Theme> getThemeById(@PathVariable("id") Long id) {
+        // Appellez un service ou renvoyez une réponse
+        Theme theme = themeService.getThemeById(id);
+        return ResponseEntity.ok(theme);
     }
 
     @PostMapping
