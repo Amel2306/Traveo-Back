@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/users")
 public class UserController {
 
     @Autowired
@@ -22,7 +22,7 @@ public class UserController {
     @Autowired
     private JwtUtil jwtUtil;
 
-    @GetMapping("/all")
+    @GetMapping("")
     public ResponseEntity<?> getAllUsers() {
         try {
             List<User> users = userService.getAllUsers();
@@ -84,7 +84,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Invalid credentials"));
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
         try {
             User updated = userService.updateUser(id, updatedUser);
@@ -92,6 +92,12 @@ public class UserController {
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.ok("User deleted successfully");
     }
 
 }
