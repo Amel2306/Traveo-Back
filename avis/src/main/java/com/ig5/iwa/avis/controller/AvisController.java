@@ -39,7 +39,7 @@ public class AvisController {
     }
 
     @GetMapping("/host/{userId}")
-    public ResponseEntity<Map<Long, List<Avis>>> getAvisOfUser(@PathVariable("userId") Long userId) {
+    public ResponseEntity<List<Avis>> getAvisOfUser(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(avisService.getAvisOfUser(userId));
     }
 
