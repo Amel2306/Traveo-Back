@@ -42,7 +42,7 @@ public class AvisService {
             throw new RuntimeException("User not found with ID: " + avis.getUserId());
         }
         else if (!activiteServiceClient.validateActivite(avis.getIdActivite())) {
-            throw new RuntimeException("Activite not found with ID: " + avis.getUserId());
+            throw new RuntimeException("Activite not found with ID: " + avis.getIdActivite());
         }
         return avisRepository.save(avis);
     }
