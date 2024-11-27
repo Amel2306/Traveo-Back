@@ -10,7 +10,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
-@Configuration
+/*@Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
@@ -19,7 +19,9 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // Utiliser la nouvelle API pour désactiver CSRF
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/user/register", "/api/user/login", "api/user/all", "api/user/{id}", "api/user/update/{id}").permitAll()
+                        .requestMatchers(
+                                "/api/user/**"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(withDefaults());
@@ -32,4 +34,23 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+}*/
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf().disable()
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll()); // Tout autoriser pour les tests
+
+        return http.build();
+    }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }
+

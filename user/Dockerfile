@@ -1,4 +1,8 @@
+# Utiliser une image OpenJDK
 FROM openjdk:17-jdk-slim
-WORKDIR /app
-COPY target/user-service.jar user-service.jar
-ENTRYPOINT ["java", "-jar", "user-service.jar"]
+
+# Copier l'application compilée dans le conteneur
+COPY build/libs/user-0.0.1-SNAPSHOT.jar app.jar
+
+# Définir le point d'entrée
+ENTRYPOINT ["java", "-jar", "/app.jar"]

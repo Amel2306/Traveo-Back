@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/users")
 public class UserController {
 
     @Autowired
@@ -22,7 +22,7 @@ public class UserController {
     @Autowired
     private JwtUtil jwtUtil;
 
-    @GetMapping("/all")
+    @GetMapping("")
     public ResponseEntity<?> getAllUsers() {
         try {
             List<User> users = userService.getAllUsers();
@@ -44,15 +44,26 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         Optional<User> user = userService.getUserById(id);
+        System.out.println("Received request for user ID: " + id);
         return user.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
     }
 
     // Enregistrement d'un utilisateur
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody User user) {
-        userService.saveUser(user);
-        return ResponseEntity.ok("User registered successfully");
+    public ResponseEntity<Map<String, Object>> register(@RequestBody User user) {
+        // Enregistre l'utilisateur et récupère l'entité persistée
+        User savedUser = userService.saveUser(user);
+
+        // Génère le token
+        String token = jwtUtil.generateToken(savedUser.getEmail());
+
+        // Retourne une réponse structurée
+        return ResponseEntity.ok(Map.of(
+                "message", "register successful",
+                "token", token,
+                "id", savedUser.getUserId() // Utilise l'ID de l'utilisateur persisté
+        ));
     }
 
     // Connexion d'un utilisateur
@@ -66,13 +77,14 @@ public class UserController {
                     "email", existingUser.getEmail(),
                     "username", existingUser.getUsername(),
                     "role", existingUser.getRole(),
-                    "token", token
+                    "token", token,
+                    "id", existingUser.getUserId()
             ));
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Invalid credentials"));
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
         try {
             User updated = userService.updateUser(id, updatedUser);
@@ -80,6 +92,12 @@ public class UserController {
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.ok("User deleted successfully");
     }
 
 }
