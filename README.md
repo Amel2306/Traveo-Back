@@ -4,6 +4,8 @@
 
 Bienvenue dans ce projet ! Ce guide vous aidera à configurer et lancer l'application en suivant quelques étapes simples. 🚀
 
+---
+
 ### 📂 Pré-requis
 
 Avant de commencer, assurez-vous d'avoir installé les outils suivants :
@@ -14,6 +16,8 @@ Un IDE tel qu'IntelliJ IDEA ou Eclipse
 Git (pour cloner le projet)
 Gradle
 
+---
+
 ### ⚙️ Étapes pour lancer le back-end
 
 ##### 1. Cloner le projet
@@ -21,10 +25,13 @@ Clonez le projet depuis le dépôt Git en utilisant la commande suivante dans vo
 
 ```git clone https://github.com/Amel2306/Traveo-Back.git```
 
+---
+
 ##### 2 Ouvrir les microservices dans l'IDE
 Chaque microservice correspond à un projet distinct dans ce dépôt.
 Ouvrez chaque microservice dans un IDE comme IntelliJ IDEA ou Eclipse.
 
+---
 
 ##### 3. Construire la base de données avec Docker Compose
 Dans le répertoire contenant le fichier docker-compose.yml, exécutez la commande suivante :
@@ -36,6 +43,7 @@ Cette commande :
 Instanciera les conteneurs nécessaires (ex ici. : PostgreSQL).
 Assurera la connexion entre les bases de données et les microservices.
 
+---
 
 ##### 4. Mettre à jour l'adresse IP dans les fichiers `*ServiceClient`
 Pour chaque microservice, localisez les classes qui se terminent par `*ServiceClient` et mettez à jour l'adresse IP des autres microservices en fonction des conteneurs Docker ou de votre configuration réseau.
@@ -46,6 +54,8 @@ Exemple dans UserServiceClient.java :
 
 Remplacez `<IP_ADDRESS>` par l'IP correcte.
 
+---
+
 ##### 5. Lancer les microservices
 Dans votre IDE :
 
@@ -54,6 +64,8 @@ Pour Gradle : Cliquez sur Run ou utilisez la commande suivante dans le terminal 
 
 
 > 💡 Astuce : Vous pouvez configurer un run configuration dans IntelliJ IDEA pour lancer tous les microservices en un clic.
+
+---
 
 ### 🚀 Vérification
 
@@ -102,6 +114,71 @@ Une fois tous les microservices lancés testez les endpoints api souhaité
 1. **Paramètres dynamiques** : Les `{id}`, `{userId}`, `{activityId}`, etc., doivent être remplacés par des valeurs réelles lors des requêtes.
 2. **Structure RESTful** : Tous les endpoints suivent une convention REST standard pour une meilleure maintenabilité et extensibilité.
 3. **Retour JSON** : Chaque endpoint retourne une réponse JSON standard.
+
+### ⌨️ Structure de code
+
+Voici une représentation et une explication de l'architecture d'un microservice du backend pour le projet **Traveo_Back**. Cette structure est applicable à tous les microservices (activités, utilisateurs, thèmes, réservations, avis).
+
+```
+📁 Traveo_Back/
+├── 📂 activité/
+│   ├── 📁 .gradle/
+│   ├── 📁 build/
+│   ├── 📁 gradle/
+│   ├── 📁 src/
+│   │   ├── 📂 main/
+│   │   │   ├── 📂 java/
+│   │   │   │   └── 📂 com.ig5.iwa.activite/
+│   │   │   │       ├── 📂 config/
+│   │   │   │       │   └── 🛠️ RestTemplateConfig.java    # Configuration des clients REST pour communiquer avec d'autres microservices
+│   │   │   │       ├── 📂 controller/
+│   │   │   │       │   └── 🌐 ActiviteController.java    # Gère les endpoints pour les opérations CRUD
+│   │   │   │       ├── 📂 model/
+│   │   │   │       │   └── 📄 Activite.java              # Représente l'entité Activite en base de données
+│   │   │   │       ├── 📂 repository/
+│   │   │   │       │   └── 📦 ActiviteRepository.java    # Interface pour les opérations CRUD avec la base de données
+│   │   │   │       ├── 📂 service/
+│   │   │   │       │   ├── 🛠️ ActiviteService.java       # Contient la logique métier pour les activités
+│   │   │   │       │   ├── 🌐 ThemeServiceClient.java    # Communication avec le service de thèmes
+│   │   │   │       │   └── 🌐 UserServiceClient.java     # Communication avec le service utilisateur
+│   │   │   │       └── 🚀 ActiviteApplication.java       # Classe principale de démarrage du microservice
+│   │   │   ├── 📂 resources/
+│   │   │   │   ├── ⚙️ application.properties            # Fichier de configuration (ports, accès DB, etc.)
+│   │   │   │   └── 📂 templates
+│   │   ├── 📂 test/                                      # Dossier pour les tests unitaires
+│   ├── ⚙️ build.gradle.kts                               # Configuration Gradle du projet
+│   ├── 🐳 docker-compose.yml                             # Configuration Docker Compose pour démarrer les microservices et la base de données
+│   ├── 🐋 Dockerfile                                     # Dockerfile pour construire une image du microservice
+│   ├── ⚙️ settings.gradle.kts                            # Configuration globale des dépendances Gradle
+│   ├── 🔧 gradlew                                        # Wrapper Gradle pour exécuter Gradle sans l'installer globalement
+│   ├── 🔧 gradlew.bat                                    # Wrapper Gradle pour Windows
+```
+
+---
+
+### Explications des fichiers et dossiers principaux
+
+#### **src/main/java/**
+- **`controller/`** : Contient les classes qui définissent les endpoints REST, par exemple `ActiviteController` pour gérer les activités.
+- **`model/`** : Contient les entités utilisées dans la base de données (ex. : `Activite`).
+- **`repository/`** : Interface pour les opérations CRUD avec la base de données via Spring Data JPA.
+- **`service/`** : Contient la logique métier, y compris les communications avec d'autres microservices via `RestTemplate`.
+- **`config/`** : Classe pour configurer les composants communs comme les clients REST.
+
+#### **src/main/resources/**
+- **`application.properties`** : Configure les ports, la connexion à la base de données et d'autres paramètres spécifiques au microservice.
+
+#### **Fichiers Docker**
+- **`Dockerfile`** : Permet de construire une image Docker pour exécuter le microservice. Il contient généralement des instructions pour copier le code, installer les dépendances et démarrer l'application.
+- **`docker-compose.yml`** : Fichier de configuration pour lancer plusieurs services en même temps, y compris les bases de données et les microservices, dans des conteneurs Docker.
+
+---
+
+### Notes générales
+- Chaque microservice (user, theme, reservation, avis) suit la même structure, avec des contrôleurs, services, modèles et repository spécifiques à leurs domaines.
+- La communication entre les microservices se fait via des clients REST (`RestTemplate` ou `FeignClient` dans certains cas).
+
+Si tu as des questions ou si tu veux des précisions sur une partie spécifique, n'hésite pas !
 
 ### 🎉 Félicitations !
 
