@@ -4,11 +4,8 @@ import com.ig5.iwa.avis.model.Avis;
 import com.ig5.iwa.avis.repository.AvisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.Map;
-import java.util.HashMap;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class AvisService {
@@ -61,8 +58,8 @@ public class AvisService {
         avisRepository.deleteById(id);
     }
 
-    public Map<Long, List<Avis>> getAvisOfUser(Long userId) {
-        Map<Long, List<Avis>> result = new HashMap<>();
+    public List<Avis> getAvisOfUser(Long userId) {
+        List<Avis> allAvis = new ArrayList<>();
 
         // Récupérer toutes les activités de l'utilisateur
         List<Map<String, Object>> activites = activiteServiceClient.getActivitesByUserId(userId);
@@ -70,7 +67,7 @@ public class AvisService {
         // Vérifier si l'utilisateur a des activités
         if (activites.isEmpty()) {
             System.out.println("No activities found for user ID: " + userId);
-            return result; // Retourne un HashMap vide
+            return allAvis; // Retourne une liste vide
         }
 
         // Parcourir les activités
@@ -80,10 +77,10 @@ public class AvisService {
             // Récupérer les avis pour chaque activité
             List<Avis> avisList = avisRepository.findByIdActivite(idActivite);
 
-            // Ajouter à la map (activité -> liste d'avis)
-            result.put(idActivite, avisList);
+            // Ajouter tous les avis dans la liste principale
+            allAvis.addAll(avisList);
         }
 
-        return result;
+        return allAvis;
     }
 }
