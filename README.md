@@ -156,7 +156,7 @@ Voici une représentation et une explication de l'architecture d'un microservice
 
 ---
 
-### Explications des fichiers et dossiers principaux
+### ℹ️ Explications des fichiers et dossiers principaux
 
 #### **src/main/java/**
 - **`controller/`** : Contient les classes qui définissent les endpoints REST, par exemple `ActiviteController` pour gérer les activités.
