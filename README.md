@@ -103,8 +103,6 @@ Une fois tous les microservices lancés testez les endpoints api souhaité
 2. **Structure RESTful** : Tous les endpoints suivent une convention REST standard pour une meilleure maintenabilité et extensibilité.
 3. **Retour JSON** : Chaque endpoint retourne une réponse JSON standard.
 
-Vous pouvez intégrer ce tableau dans votre documentation ou README pour une navigation rapide entre les endpoints. 🚀
-
 ### 🎉 Félicitations !
 
 Vous êtes maintenant prêt à utiliser l'application ! Si vous rencontrez des problèmes ou des questions, consultez les logs des services ou contactez l'équipe technique (Amel, Ines et Nouhaila : un mail suffira :)).
